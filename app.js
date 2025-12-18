@@ -1,6 +1,10 @@
 const express = require('express');
 const getUsers = require('./getUsers.js');
+// const getContent = require('./template.js') // LIVE REVIEW
 const app = express();
+const PORT = 3000;
+
+// const specialtyFilter = (specialty) => usersData.filter(user => user.specialty === specialty); // LIVE REVIEW
 
 app.get('/', (req, res) => {
   res.send(`
@@ -30,7 +34,6 @@ app.get('/developer', (req, res) => {
     <a href="/sales">Ventas</a>
     <h2>Developer</h2>
     <p>Aquí te presento a nuestros developers, quienes hacen magia.</p>
-    <p>Equipo:</p>
     <div>${getUsers('developers')}</div>
     <p>Y si quieres ver el resto del equipo, clica en el correspondiente botón del menú.</p>
   `);
@@ -81,12 +84,42 @@ app.get('/sales', (req, res) => {
   `);
 });
 
+// 👇 CODIGO DE LA LIVE REVIEW EMPIEZA DESDE AQUÍ 👇
+
+/* app.get('/developer', (req, res) => {
+  const specialty = "developers"
+  const users = specialtyFilter(specialty)
+  res.send(getContent(specialty, users));
+});
+
+app.get('/marketing', (req, res) => {
+  const specialty = "marketing"
+  const users = specialtyFilter(specialty)
+  res.send(getContent(specialty, users));
+});
+
+app.get('/qa', (req, res) => {
+  const specialty = "qas"
+  const users = specialtyFilter(specialty)
+  res.send(getContent(specialty, users));
+});
+
+app.get('/sales', (req, res) => {
+  const specialty = "ventas"
+  const users = specialtyFilter(specialty)
+  res.send(getContent(specialty, users));
+}); */
+
+// ☝️ CODIGO DE LA LIVE REVIEW HASTA AQUÍ ☝️
+
 app.use((req, res) => {
   res.status(404).send(`
     <h1>Página no encontrada</h1>
     <a href="/">Home</a>`);
+  // res.status(404).json({error: 'page not found - 404'}) // De esta forma creamos API. Formateamos el texto para enviar un json con la info que necesitamos
+  
 });
 
-app.listen(3000, () => {
-  console.log('NodeJS está escuchando en el puerto 3000');
+app.listen(PORT, () => {
+  console.log(`El servidor Express está escuchando en la URL: http://localhost:${PORT}`);
 })
